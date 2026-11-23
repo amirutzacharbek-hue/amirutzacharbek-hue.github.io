@@ -41,7 +41,7 @@ const LIST = [
     adds: SYR.slice(0, 3), ing: [['Espresso', '', 0], ['Mocha sauce', '', 0], ['Gingerbread syrup', '', 1], ['Cocoa dusting', '', 1]],
     rv: [['Felix', 5, 'Chocolate and gingerbread together, why is this not on the menu all year?'], ['Nora', 4, 'Strong and cosy. Add an extra shot if you need to wake up.']] },
   // holiday food
-  { id: 'cakepop-holiday', n: 'Snowy White Cake Pop', ph: 'hol-cakepop-holiday', cat: 'bakery', hol: 1, price: 3.25, k: 170, d: 'Vanilla cake and buttercream, dipped in white chocolate and dusted with sugar snow. Holiday only.', r: 4.8, c: 1720, al: 'Milk,Soy,Wheat,Egg', ing: [['Sugar snow topping', '', 1]],
+  { id: 'cakepop-holiday', n: 'Snowy White Cake Pop', ph: 'hol-cakepop-holiday', cat: 'bakery', hol: 1, price: 3.25, k: 170, d: 'Vanilla cake and buttercream, dipped in white chocolate with red and white holiday sprinkles. Holiday only.', r: 4.8, c: 1720, al: 'Milk,Soy,Wheat,Egg', ing: [['Holiday sprinkles', '', 1]],
     rv: [['Zoe', 5, 'Tiny, but the best part of my order.'], ['Ben', 5, 'Bought three for the office. No regrets.']] },
   { id: 'gingerbread-cookie', n: 'Gingerbread Cookie', ph: 'hol-gingerbread-cookie', cat: 'bakery', hol: 1, price: 2.95, k: 220, d: 'Soft, spiced gingerbread with sugar icing, baked for the season.', r: 4.5, c: 430, al: 'Wheat,Egg,Milk', ing: [['Sugar icing', '', 1]],
     rv: [['Hugo', 5, 'Soft in the middle, just how it should be.'], ['Amira', 4, 'Cute and tasty, great with a latte.']] },
@@ -64,9 +64,9 @@ const LIST = [
   { id: 'coffee-frapp', n: 'Coffee Frappuccino', ph: 'drink-frapp-coffee', cat: 'drink', temp: 'iced', price: P3(4.95), k: 230, d: 'Coffee blended with milk and ice. The original Frappuccino.', r: 4.4, c: 1990, tags: [], milk: 1,
     adds: [['Whipped cream', 0, 'Milk'], ...SYR.slice(0, 4)], ing: [['Coffee', '', 0], ['Classic syrup', '', 1]],
     rv: [['Ethan', 4, 'Not too sweet, just cold coffee done well.'], ['Isla', 5, 'Add caramel syrup and it is perfect.']] },
-  { id: 'strawberry-frapp', n: 'Strawberry Crème Frappuccino', ph: 'drink-strawberry-frapp', cat: 'drink', temp: 'iced', price: P3(5.25), k: 370, d: 'Strawberry purée blended with milk and ice, topped with whipped cream. No coffee.', r: 4.4, c: 1210, tags: ['sweet', 'nocoffee'], milk: 1,
-    adds: [['Vanilla syrup', .8, '']], ing: [['Strawberry purée', '', 0], ['Whipped cream', 'Milk', 1]],
-    rv: [['Chloe', 5, 'Pink, sweet and fun. My daughter loves it.'], ['Max', 4, 'Tastes like a strawberry milkshake.']] },
+  { id: 'strawberry-frapp', n: 'Pink Drink', ph: 'drink-strawberry-frapp', cat: 'drink', temp: 'iced', price: P3(4.95), k: 140, d: 'Strawberry açaí shaken with coconut milk and ice, with real strawberry pieces. Light and fruity, no coffee taste.', r: 4.6, c: 2310, tags: ['sweet', 'nocoffee'],
+    adds: [['Vanilla sweet cream cold foam', 1.25, 'Milk']], ing: [['Strawberry açaí base', '', 0], ['Coconut milk', '', 0], ['Strawberry pieces', '', 1]],
+    rv: [['Chloe', 5, 'Pink, fruity and so refreshing in summer.'], ['Max', 4, 'Light and not too sweet. Try it with cold foam.']] },
   { id: 'matcha', n: 'Matcha Latte', ph: 'drink-matcha', cat: 'drink', temp: 'iced', price: P3(4.95), k: 200, d: 'Smooth, sweetened matcha green tea with milk, served hot or over ice.', r: 4.5, c: 1640, tags: ['nocoffee'], milk: 1,
     adds: [['Vanilla syrup', .8, ''], ['Vanilla cold foam', 1.25, 'Milk']], ing: [['Matcha', '', 0], ['Classic syrup', '', 1]],
     rv: [['Yuki', 5, 'Get it with oat milk, it tastes like a dessert.'], ['Sara', 4, 'Smooth, a little sweet. I ask for less syrup.']] },
@@ -122,7 +122,7 @@ const BUILD = [
   ['caramel-macchiato', { mode: 'hot', dot: '#c58a4a' }],
   ['latte', { mode: 'hot', dot: '#d9b48a' }],
   ['peppermint-mocha', { mode: 'hot', dot: '#c8102e', red: 1 }],
-  ['gingerbread-latte', { mode: 'hot', dot: '#a0522d', red: 1 }],
+  ['gingerbread-latte', { mode: 'hot', dot: '#a0522d', red: 1, cupBg: 'green' }],
   ['matcha', { mode: 'iced', dot: '#8db35a', low: '#f1eee2', up: '#7fae4c', split: .45, label: 'Iced Matcha Latte' }],
   ['cold-brew', { mode: 'iced', dot: '#3a2416', low: '#4a2a16', up: '#2b170b', split: .7 }]
 ];
@@ -582,6 +582,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape' && lb.classList.contai
 fetch(PH + 'credits.json').then(r => r.json()).then(c => {
   credits = c;
   renderAllMenus();
+  $$('.sph[data-ph]').forEach(el => { const id = el.dataset.ph; if (!c[id]) return; el.innerHTML = imgTag(id, '(max-width: 760px) 46vw, 24vw', '', el.dataset.alt).replace('loading="lazy"', 'loading="eager"') + `<span class="credit">${who(id)}</span>`; });
   $$('.room[data-ph]').forEach(el => { const id = el.dataset.ph; if (!c[id]) { el.remove(); return; } el.innerHTML = imgTag(id, '(max-width: 1000px) 84vw, 70vw', '', el.dataset.t + ', ' + el.dataset.s) + `<figcaption><div><b>${el.dataset.t}</b><span>${el.dataset.s}</span></div><span class="credit">${who(id)}</span></figcaption>`; el.dataset.full = PH + id + '-3840.webp'; el.dataset.cap = el.dataset.t + ' · ' + who(id); });
   $$('.loc').forEach(el => { const a = el.dataset.out, b = el.dataset.in, nm = el.querySelector('b').textContent; if (!c[a]) { el.remove(); return; } el.insertAdjacentHTML('afterbegin', imgTag(a, '(max-width: 1000px) 50vw, 33vw', 'out', nm) + (c[b] ? imgTag(b, '(max-width: 1000px) 50vw, 33vw', 'in', nm + ', inside') : '')); el.dataset.full = PH + a + '-3840.webp'; el.dataset.full2 = c[b] ? PH + b + '-3840.webp' : ''; el.dataset.cap = nm + ' · ' + who(a); el.dataset.cap2 = c[b] ? nm + ', inside · ' + who(b) : ''; if (!c[b]) el.querySelector('.peek').textContent = 'See photo'; });
   if (c['store-shanghai-roaster']) { $('#jbg').style.backgroundImage = `url(${PH}store-shanghai-roaster-1920.webp)`; $('#jcredit').textContent = who('store-shanghai-roaster'); }
@@ -619,7 +620,27 @@ const nameTex = new THREE.CanvasTexture(nameCanvas); nameTex.colorSpace = THREE.
 const iceTex = new THREE.CanvasTexture(iceCanvas); iceTex.colorSpace = THREE.SRGBColorSpace; iceTex.anisotropy = 8;
 const siren = new Image(); siren.src = 'img/starbucks-siren.svg';
 // backgrounds are painted once, so redrawing the name never flickers
-const bgPaper = mk(), bgRed = mk();
+const bgPaper = mk(), bgRed = mk(), bgGreen = mk();
+// green holiday cup with little gingerbread figures and gold stars
+(() => {
+  let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const r = bgGreen.getContext('2d'); const gr = r.createLinearGradient(0, 0, 0, TH); gr.addColorStop(0, '#0d6b48'); gr.addColorStop(1, '#064330'); r.fillStyle = gr; r.fillRect(0, 0, TW, TH);
+  const man = (x, y, s, a) => {
+    r.save(); r.translate(x, y); r.rotate((rnd() - .5) * .5); r.globalAlpha = a; r.fillStyle = '#e8c79a';
+    r.beginPath(); r.arc(0, -s * .62, s * .26, 0, 7); r.fill();
+    r.beginPath(); r.ellipse(0, 0, s * .3, s * .42, 0, 0, 7); r.fill();
+    r.lineCap = 'round'; r.strokeStyle = '#e8c79a'; r.lineWidth = s * .2;
+    [[-1, -.15, -.62, .05], [1, -.15, .62, .05], [-1, .3, -.32, .78], [1, .3, .32, .78]].forEach(([sx, y1, x2, y2]) => { r.beginPath(); r.moveTo(sx * s * .18, y1 * s); r.lineTo(x2 * s, y2 * s); r.stroke(); });
+    r.fillStyle = '#7a3e1d'; [[-.1, -.66], [.1, -.66], [0, -.12], [0, .08], [0, .28]].forEach(([dx, dy]) => { r.beginPath(); r.arc(dx * s, dy * s, s * .045, 0, 7); r.fill(); });
+    r.restore();
+  };
+  const star = (x, y, s, a) => { r.save(); r.translate(x, y); r.globalAlpha = a; r.fillStyle = '#d9b25f'; r.beginPath(); for (let k = 0; k < 10; k++) { const rr = k % 2 ? s * .42 : s, an = k * Math.PI / 5 - Math.PI / 2; r.lineTo(Math.cos(an) * rr, Math.sin(an) * rr); } r.fill(); r.restore(); };
+  for (let i = 0; i < 90; i++) {
+    const x = rnd() * TW, y = rnd() * TH, nearName = y > TH * .66 && Math.abs(((x - TW / 2 + TW * 1.5) % TW) - TW / 2) < 800, nearSiren = y < TH * .45 && Math.abs(x - TW / 2) < 450;
+    if (nearName || nearSiren) continue;
+    i % 3 ? star(x, y, 18 + rnd() * 26, .55 + rnd() * .4) : man(x, y, 70 + rnd() * 50, .85);
+  }
+})();
 (() => {
   let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
   const g = bgPaper.getContext('2d'); g.fillStyle = '#fbfaf7'; g.fillRect(0, 0, TW, TH);
@@ -663,7 +684,7 @@ function drawName(g, ink) {
 }
 function drawCup() {
   const red = BM[drink]?.red, g = nameCanvas.getContext('2d'), cx = TW / 2;
-  g.drawImage(red ? bgRed : bgPaper, 0, 0);
+  g.drawImage(BM[drink]?.cupBg === 'green' ? bgGreen : red ? bgRed : bgPaper, 0, 0);
   if (siren.complete && siren.naturalWidth) {
     if (red) { g.fillStyle = '#fff'; g.beginPath(); g.arc(cx, TH * .19, 330, 0, 7); g.fill(); }
     g.drawImage(siren, cx - 300, TH * .19 - 300, 600, 600);
@@ -731,7 +752,7 @@ function apply() {
   animateNum($('#price'), p.price[sizeKey]);
   modeWant = b.mode === 'iced' ? 1 : 0;
   if (b.mode === 'iced') { lower.material.color.set(b.low); upper.material.color.set(b.up); fill = 0; }
-  $('.builder').classList.toggle('xmas', !!b.red);
+  $('.builder').classList.toggle('xmas', !!b.red); $('.builder').classList.toggle('green', b.cupBg === 'green');
   drawCup();
 }
 function selectDrink(id) { if (!BM[id]) return; drink = id; $$('#drinks button').forEach(x => x.setAttribute('aria-pressed', x.dataset.d === id)); apply(); spinKick += 1.2; }
@@ -863,16 +884,31 @@ function tick() {
 }
 requestAnimationFrame(tick);
 
-// ---------- map ----------
-const SHOPS = [{ x: 220, y: 150, n: 'Market Square', h: 'open until 10 pm', d: '0.2 mi' }, { x: 455, y: 230, n: 'Riverside Park', h: 'open until 9 pm', d: '0.6 mi' }, { x: 640, y: 110, n: 'Grand Boulevard', h: 'open 24 hours', d: '0.9 mi' }, { x: 820, y: 300, n: 'Central Station', h: 'open until 11 pm', d: '1.3 mi' }];
-const svg = $('#map svg'), tip = $('#tip'), mapEl = $('#map');
-SHOPS.forEach(s => {
-  const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-  g.innerHTML = `<circle class="pulse" cx="${s.x}" cy="${s.y}" r="18" fill="#00704a" opacity=".5"/><g class="pin2" style="cursor:pointer"><circle cx="${s.x}" cy="${s.y}" r="16" fill="#00704a" stroke="#fff" stroke-width="4"/><text x="${s.x}" y="${s.y + 6}" text-anchor="middle" font-size="16" fill="#fff">★</text></g>`;
-  const show = () => { const r = mapEl.getBoundingClientRect(), vb = svg.viewBox.baseVal, sc = Math.max(r.width / vb.width, r.height / vb.height), ox = (r.width - vb.width * sc) / 2, oy = (r.height - vb.height * sc) / 2; tip.style.left = (ox + s.x * sc) + 'px'; tip.style.top = (oy + s.y * sc) + 'px'; tip.innerHTML = `<b>${s.n}</b>${s.h} · ${s.d}`; tip.classList.add('show'); };
-  g.addEventListener('pointerenter', show); g.addEventListener('click', show); g.addEventListener('pointerleave', () => tip.classList.remove('show'));
-  svg.appendChild(g);
-});
+// ---------- store finder (Google Maps, loaded only when the visitor asks) ----------
+{
+  const fmap = $('#fmap'), note = $('#findNote'), open = $('#openMaps'), btn = $('#nearMe');
+  const show = (q, label) => {
+    const src = 'https://www.google.com/maps?output=embed&z=14&q=' + encodeURIComponent(q);
+    fmap.innerHTML = `<iframe title="Starbucks stores ${label}" src="${src}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>`;
+    open.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
+  };
+  btn.addEventListener('click', () => {
+    if (!navigator.geolocation) { note.textContent = 'Your browser cannot share a location. Type a city instead.'; return; }
+    btn.classList.add('busy'); note.textContent = 'Finding stores around you…';
+    navigator.geolocation.getCurrentPosition(p => {
+      btn.classList.remove('busy');
+      const ll = p.coords.latitude.toFixed(4) + ',' + p.coords.longitude.toFixed(4);
+      show('Starbucks near ' + ll, 'near you'); note.textContent = 'Showing the stores closest to you. Tap a pin for hours and directions.';
+    }, () => {
+      btn.classList.remove('busy');
+      note.textContent = 'Location is off, so here is a search instead. You can also type a city.'; show('Starbucks', 'nearby');
+    }, { timeout: 10000, maximumAge: 600000 });
+  });
+  $('#findForm').addEventListener('submit', e => {
+    e.preventDefault(); const v = $('#findQ').value.trim(); if (!v) return;
+    show('Starbucks in ' + v, 'in ' + v); note.textContent = 'Starbucks stores in ' + v + '.';
+  });
+}
 
 // ---------- reveals ----------
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });

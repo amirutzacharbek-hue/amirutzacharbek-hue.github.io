@@ -49,43 +49,44 @@ composer.addPass(bloom);
 composer.addPass(new OutputPass());
 
 // ---------- image-based lighting (CC0 HDRIs from Poly Haven) ----------
+// Real places, photographed in 360°: the photo is projected onto the ground so the car stands on the real pavement.
+// u/v = where the main light sits in the panorama, look = the part of the panorama behind the car in the first view
+const PLACES = {
+  day: { file: 'canary', look: .97, u: .934, el: 48, sun: '#fff6ea', amt: .55, shade: .55, exp: 1, bloom: .18, lights: .35 },
+  evening: { file: 'zollhof', look: .62, u: .61, el: 40, sun: '#ffd9a8', amt: .7, shade: .5, exp: 1.05, bloom: .3, lights: 1 },
+  night: { file: 'hamburg', look: .662, u: .4, el: 60, sun: '#ffdcae', amt: .5, shade: .5, exp: 1, bloom: .35, lights: 1 }
+};
 const pmrem = new THREE.PMREMGenerator(renderer);
 const envs = {};
-const HDR = { city: small ? 'canary_1k' : 'canary_2k', studio: 'studio', night: 'night' };
+const hdrFile = n => PLACES[n] ? `${PLACES[n].file}_1k` : n;
 function loadEnv(name) {
   if (envs[name]) return envs[name];
-  envs[name] = new Promise(res => new RGBELoader().load(`/lib/hdr/${HDR[name] || name}.hdr`, t => {
+  envs[name] = new Promise(res => new RGBELoader().load(`/lib/hdr/${hdrFile(name)}.hdr`, t => {
     t.mapping = THREE.EquirectangularReflectionMapping;
     const e = pmrem.fromEquirectangular(t).texture; t.dispose(); res(e);
   }));
   return envs[name];
 }
 scene.environmentIntensity = 1;
-const STUDIO_ROT = 1.1, CITY_ROT = qs.has('rot') ? +qs.get('rot') : cfg.cityRot ?? 5.23;
+const STUDIO_ROT = 1.1, HERO_U = .137; // the first camera looks at u = .137 of an unrotated panorama
+const placeRot = n => qs.has('rot') ? +qs.get('rot') : (PLACES[n].look - HERO_U) * 2 * Math.PI;
 scene.environmentRotation = new THREE.Euler(0, STUDIO_ROT, 0);
 
 // lights (the HDRI does most of the work)
 const key = new THREE.DirectionalLight('#ffffff', 1.3); key.position.set(3, 7, 4); scene.add(key);
 const rimL = new THREE.DirectionalLight('#9fb8ff', 1.1); rimL.position.set(-6, 3, -5); scene.add(rimL);
 
-// ---------- real place: Canary Wharf, London (CC0 HDRI by Andreas Mischok, Poly Haven) ----------
-// the photo is projected onto the ground, so the car stands on the real pavement
 const city = new THREE.Group(); city.visible = false; scene.add(city);
 const sky = new GroundedSkybox(null, 2.1, 46, small ? 64 : 128);
-sky.position.y = 2.1 - .002; sky.material.fog = false; sky.renderOrder = -1;
-sky.rotation.y = CITY_ROT; city.add(sky);
-let skyLoaded = null;
-function loadSky() {
-  return skyLoaded ??= new Promise(res => new THREE.TextureLoader().load(`/lib/hdr/${small ? 'canary_bg_s' : 'canary_bg'}.jpg`, t => {
-    t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = renderer.capabilities.getMaxAnisotropy();
-    t.generateMipmaps = true; sky.material.map = t; sky.material.needsUpdate = true; res();
+sky.position.y = 2.1 - .002; sky.material.fog = false; sky.renderOrder = -1; city.add(sky);
+const skies = {};
+function loadSky(n) {
+  return skies[n] ??= new Promise(res => new THREE.TextureLoader().load(`/lib/hdr/${PLACES[n].file}_bg${small ? '_s' : ''}.jpg`, t => {
+    t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = renderer.capabilities.getMaxAnisotropy(); res(t);
   }));
 }
-// the overcast sun: soft shadow cast onto the photographed ground
+// the main light of each place casts a soft shadow onto the photographed ground
 const sun = new THREE.DirectionalLight('#fff6ea', .55);
-{ const el = THREE.MathUtils.degToRad(48), az = 2.725; // brightest patch of the sky in the HDRI
-  const d = new THREE.Vector3(Math.cos(el) * Math.cos(az), Math.sin(el), Math.cos(el) * Math.sin(az));
-  d.applyAxisAngle(new THREE.Vector3(0, 1, 0), CITY_ROT); sun.position.copy(d.multiplyScalar(12)); }
 sun.castShadow = true;
 sun.shadow.mapSize.set(small ? 1024 : 2048, small ? 1024 : 2048);
 Object.assign(sun.shadow.camera, { left: -4.5, right: 4.5, top: 4.5, bottom: -4.5, near: 1, far: 30 });
@@ -93,6 +94,14 @@ sun.shadow.radius = small ? 6 : 10; sun.shadow.blurSamples = 16; sun.shadow.bias
 city.add(sun);
 const catcher = new THREE.Mesh(new THREE.PlaneGeometry(24, 24), new THREE.ShadowMaterial({ opacity: .55, color: '#0b0d12' }));
 catcher.rotation.x = -Math.PI / 2; catcher.position.y = .001; catcher.receiveShadow = true; city.add(catcher);
+function setPlace(n, tex) {
+  const P = PLACES[n], rot = placeRot(n);
+  sky.material.map = tex; sky.material.needsUpdate = true; sky.rotation.y = rot;
+  const el = THREE.MathUtils.degToRad(P.el), az = (P.u - .5) * 2 * Math.PI;
+  sun.position.set(Math.cos(el) * Math.cos(az), Math.sin(el), Math.cos(el) * Math.sin(az)).applyAxisAngle(new THREE.Vector3(0, 1, 0), rot).multiplyScalar(12);
+  sun.color.set(P.sun); sun.intensity = P.amt; catcher.material.opacity = P.shade;
+  scene.environmentRotation.y = rot; renderer.toneMappingExposure = P.exp;
+}
 
 // ---------- glossy studio floor ----------
 function radialTex(stops) {
@@ -159,8 +168,8 @@ let carH = 1.45;
 const loaderEl = document.getElementById('loader'), pctEl = document.getElementById('pct'), lnEl = loaderEl.querySelector('.ln');
 function setPct(p) { pctEl.textContent = p + '%'; lnEl.style.setProperty('--p', p + '%'); }
 const draco = new DRACOLoader().setDecoderPath('/lib/addons/libs/draco/');
-let mood = cfg.mood || 'city', moodK = 0;
-const envReady = Promise.all([loadEnv(mood).then(e => { scene.environment = e; }), mood === 'city' ? loadSky() : null]).then(() => applyMood(mood));
+let mood = PLACES[qs.get('scene')] || qs.get('scene') === 'studio' ? qs.get('scene') : cfg.mood || 'day';
+const envReady = Promise.all([loadEnv(mood), PLACES[mood] ? loadSky(mood) : null]).then(([e, tex]) => { scene.environment = e; applyMood(mood, tex); });
 new GLTFLoader().setDRACOLoader(draco).load(cfg.glb, async gltf => {
   const m = gltf.scene, drop = [];
   m.traverse(o => {
@@ -257,24 +266,33 @@ document.querySelectorAll('#swatches button').forEach(b => b.addEventListener('c
 let lightsOn = true, lightK = 0;
 document.getElementById('lights')?.addEventListener('click', e => { lightsOn = !lightsOn; e.currentTarget.setAttribute('aria-pressed', lightsOn); });
 const studioFog = scene.fog;
-function applyMood(m) {
-  const c = m === 'city';
-  city.visible = c;
+function applyMood(m, tex) {
+  const c = !!PLACES[m];
+  city.visible = c; if (c) setPlace(m, tex);
   [floorFade, glow, ring].forEach(o => o.visible = !c); if (mirror) mirror.visible = !c;
   scene.fog = c ? null : studioFog;
-  scene.environmentRotation.y = c ? CITY_ROT : STUDIO_ROT;
+  if (!c) { scene.environmentRotation.y = STUDIO_ROT; renderer.toneMappingExposure = 1; }
   rimL.visible = key.visible = !c;
   shadow.material.opacity = c ? .8 : 1;
-  canvas.classList.toggle('city', c); document.documentElement.classList.toggle('scene-city', c);
+  document.documentElement.classList.toggle('scene-city', c);
+  document.documentElement.dataset.scene = m;
 }
+// switching places: a short fade, the new place, fade back in
+let switching = false;
 document.querySelectorAll('#mood button').forEach(b => {
   b.setAttribute('aria-pressed', b.dataset.m === mood);
-  if (b.dataset.m === mood) { const n = document.getElementById('moodName'); if (n) n.textContent = b.textContent; }
+  if (b.dataset.m === mood) { const n = document.getElementById('moodName'); if (n) n.textContent = b.dataset.n || b.textContent; }
+  b.addEventListener('pointerenter', () => { if (PLACES[b.dataset.m]) { loadEnv(b.dataset.m); loadSky(b.dataset.m); } }, { once: true });
   b.addEventListener('click', async () => {
+    const want = b.dataset.m; if (want === mood || switching) return;
+    switching = true;
     document.querySelectorAll('#mood button').forEach(x => x.setAttribute('aria-pressed', x === b));
-    const want = b.dataset.m; document.getElementById('moodName').textContent = b.textContent;
-    const [env] = await Promise.all([loadEnv(want), want === 'city' ? loadSky() : null]);
-    mood = want; scene.environment = env; applyMood(mood);
+    document.getElementById('moodName').textContent = b.dataset.n || b.textContent;
+    const ready = Promise.all([loadEnv(want), PLACES[want] ? loadSky(want) : null]);
+    canvas.classList.add('swap');
+    const [[env, tex]] = await Promise.all([ready, new Promise(r => setTimeout(r, reduce ? 0 : 380))]);
+    mood = want; scene.environment = env; applyMood(mood, tex);
+    requestAnimationFrame(() => { canvas.classList.remove('swap'); switching = false; });
   });
 });
 
@@ -321,15 +339,10 @@ function frame(t) {
     paintMat.color.copy(paintFrom).lerp(paintTo, e); tintMats.forEach(m => m.color.copy(paintFrom).lerp(paintTo, e));
   }
   // lights + mood
-  const lw = lightsOn && started ? Math.min(1, introT * 1.5) * cur.lights : 0; lightK += (lw - lightK) * .1;
+  const lw = lightsOn && started ? Math.min(1, introT * 1.5) * Math.max(cur.lights, PLACES[mood]?.lights ?? 0) : 0; lightK += (lw - lightK) * .1;
   headMats.forEach(m => m.emissiveIntensity = lightK * 10); tailMats.forEach(m => m.emissiveIntensity = lightK * 8);
-  moodK += ((mood === 'night' ? 1 : 0) - moodK) * .05;
-  scene.background.copy(BG).lerp(nightBG, moodK); studioFog.color.copy(scene.background);
-  scene.environmentIntensity = 1 - moodK * .45; key.intensity = 1.3 * (1 - moodK * .7);
-  glow.material.opacity = 1 - moodK * .3;
   ring.material.opacity = cur.ring * .55; ring.scale.setScalar(1 + Math.sin(t * .0012) * .015);
-  bloom.strength = mood === 'city' ? .18 : .45 + moodK * .3;
-  if (mood === 'city') { scene.environmentIntensity = 1; sky.material.color.setScalar(1); }
+  bloom.strength = PLACES[mood] ? PLACES[mood].bloom : .45;
   composer.render();
 }
 requestAnimationFrame(frame);

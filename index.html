@@ -1,14 +1,18 @@
 ﻿<!doctype html>
-<html lang="en">
+<html lang="ro">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Amir Charbek · Web designer &amp; front-end developer</title>
-<meta name="description" content="Amir Charbek designs and builds fast, interactive websites with 3D, motion and hand-written code. BSc Computer Science, University of Wollongong in Dubai, plus a master's degree.">
+<title>Amir Charbek · Web designer și front-end developer</title>
+<meta name="description" content="Amir Charbek proiectează și construiește site-uri rapide și interactive, cu 3D, animație și cod personalizat. Licență în Informatică la University of Wollongong in Dubai și master.">
 <meta name="theme-color" content="#0d0e10">
 <link rel="stylesheet" href="/fonts/fonts.css">
 <link rel="stylesheet" href="/style.css">
 <script type="importmap">{ "imports": { "three": "/lib/three.module.min.js" } }</script>
+<script>
+// pick the language before the page paints: saved choice, then ?lang=, then Romanian
+(() => { let l = new URLSearchParams(location.search).get('lang'); if (l !== 'en' && l !== 'ro') { try { l = localStorage.getItem('lang'); } catch {} } window.__lang = l === 'en' ? 'en' : 'ro'; })();
+</script>
 </head>
 <body>
 
@@ -16,12 +20,15 @@
   <div class="wrap">
     <a class="brand" href="#"><i aria-hidden="true">AC</i>Amir Charbek</a>
     <nav aria-label="Main">
-      <a href="#work">Work</a>
-      <a href="#about">About</a>
-      <a href="#process">Process</a>
-      <a href="#contact">Contact</a>
+      <a href="#work" data-t="nWork">Lucrări</a>
+      <a href="#about" data-t="nAbout">Despre</a>
+      <a href="#process" data-t="nProc">Proces</a>
+      <a href="#contact" data-t="nContact">Contact</a>
     </nav>
-    <a class="avail" href="#contact"><b aria-hidden="true"></b><span>Available for new projects</span></a>
+    <div class="hr">
+      <div class="lang" role="group" aria-label="Limba / Language"><button type="button" data-l="ro" aria-pressed="true" lang="ro">RO</button><button type="button" data-l="en" aria-pressed="false" lang="en">EN</button></div>
+      <a class="avail" href="#contact"><b aria-hidden="true"></b><span data-t="avail">Disponibil pentru proiecte noi</span></a>
+    </div>
   </div>
 </header>
 
@@ -29,65 +36,65 @@
   <div class="hero">
     <canvas id="bg" aria-hidden="true"></canvas>
     <div class="wrap">
-      <div class="eyebrow">Web designer &amp; front-end developer</div>
-      <h1 id="headline">Websites people <span class="nb"><em>remember</em>.</span></h1>
-      <p>I'm Amir. I design and hand-code websites with real-time 3D, smooth motion and attention to every detail, and they still load fast on a phone.</p>
+      <div class="eyebrow" data-t="role">Web designer și front-end developer</div>
+      <h1 id="headline" data-t="h1">Site-uri de care oamenii <span class="nb"><em>își amintesc</em>.</span></h1>
+      <p data-t="heroP">Sunt Amir. Proiectez și construiesc site-uri cu 3D în timp real, animații fluide și atenție la fiecare detaliu, care se încarcă repede chiar și pe telefon.</p>
       <div class="cta">
-        <a class="btn" href="#work">See my work <span aria-hidden="true">↓</span></a>
-        <a class="btn ghost" href="#contact">Get in touch</a>
+        <a class="btn" href="#work" data-t="seeWork">Vezi lucrările <span aria-hidden="true">↓</span></a>
+        <a class="btn ghost" href="#contact" data-t="touch">Hai să vorbim</a>
       </div>
     </div>
     <div class="scroll-cue" aria-hidden="true"></div>
   </div>
 
-  <div class="marquee" aria-hidden="true"><div>
-    <span>Three.js &amp; WebGL</span><span>Interaction design</span><span>Motion</span><span>Responsive layouts</span><span>Accessibility</span><span>Performance</span><span>Clean code</span>
-    <span>Three.js &amp; WebGL</span><span>Interaction design</span><span>Motion</span><span>Responsive layouts</span><span>Accessibility</span><span>Performance</span><span>Clean code</span>
+  <div class="marquee" aria-hidden="true"><div data-t="marq">
+    <span>Three.js și WebGL</span><span>Design de interacțiune</span><span>Animație</span><span>Layout responsive</span><span>Accesibilitate</span><span>Performanță</span><span>Cod curat</span>
+    <span>Three.js și WebGL</span><span>Design de interacțiune</span><span>Animație</span><span>Layout responsive</span><span>Accesibilitate</span><span>Performanță</span><span>Cod curat</span>
   </div></div>
 
   <section id="work">
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <div class="eyebrow reveal">Selected work</div>
-          <h2 class="reveal">Two brands, <em>reimagined</em>.</h2>
+          <div class="eyebrow reveal" data-t="wEye">Lucrări alese</div>
+          <h2 class="reveal" data-t="wH">Două branduri, <em>regândite</em>.</h2>
         </div>
-        <p class="lead reveal">Concept redesigns I built from scratch to show what a website can feel like. Open them and play: everything is interactive.</p>
+        <p class="lead reveal" data-t="wLead">Concepte de redesign construite de la zero, ca să arate cum se poate simți un site. Deschide-le și joacă-te: totul e interactiv. Proiectele sunt în limba engleză.</p>
       </div>
 
       <article class="project">
         <a class="frame reveal" href="/proiecte/tesla/" data-tilt>
           <div class="bar"><i></i><i></i><i></i><span>tesla · 5-model showroom concept</span></div>
-          <div class="shot"><img src="/proiecte/tesla/cover.jpg" alt="Tesla concept: a detailed 3D Tesla in a dark showroom with a mirror floor" loading="lazy" width="1600" height="1000"></div>
-          <div class="open">Open ↗</div>
+          <div class="shot"><img src="/proiecte/tesla/cover.jpg" data-ta="tAlt" alt="Conceptul Tesla: o mașină Tesla 3D detaliată într-un showroom" loading="lazy" width="1600" height="1000"></div>
+          <div class="open" data-t="open">Deschide ↗</div>
         </a>
         <div class="meta reveal">
-          <div class="num">01 / Automotive</div>
+          <div class="num" data-t="tNum">01 / Auto</div>
           <div class="logo"><img src="/proiecte/tesla/img/tesla-wordmark-white.svg" alt="Tesla" style="height:18px"></div>
-          <h3>Five 3D showrooms you scroll through</h3>
-          <p>Pick a Model S, 3, X, Y or the Cybertruck and get its own page. Detailed real-time 3D models sit on a mirror floor, and as you scroll the camera circles the car, lights it up at night and flies inside the cabin so you can look around. Real photos fill the gallery, and at the end you change the paint and lighting live.</p>
-          <div class="tags"><span>Three.js</span><span>5 detailed 3D models</span><span>Interior view</span><span>Scroll-driven camera</span><span>Live configurator</span></div>
-          <a class="link" href="/proiecte/tesla/">View the project <span aria-hidden="true">→</span></a>
+          <h3 data-t="tH">Cinci showroom-uri 3D prin care derulezi</h3>
+          <p data-t="tP">Alegi Model S, 3, X, Y sau Cybertruck și fiecare are pagina lui. Mașina 3D stă într-un loc real, Londra ziua, Düsseldorf seara sau Hamburg noaptea, ori într-un studio, iar camera se rotește în jurul ei pe măsură ce derulezi. Fiecare pagină are un tur al interiorului real, cu puncte pe care apeși, o galerie foto și un configurator pentru culoare și lumini.</p>
+          <div class="tags" data-t="tTags"><span>Three.js</span><span>5 modele 3D detaliate</span><span>Zi, seară, noapte</span><span>Tur al interiorului</span><span>Configurator live</span></div>
+          <a class="link" href="/proiecte/tesla/" data-t="view">Vezi proiectul <span aria-hidden="true">→</span></a>
         </div>
       </article>
 
       <article class="project">
         <a class="frame reveal" href="/proiecte/starbucks/" data-tilt>
           <div class="bar"><i></i><i></i><i></i><span>starbucks · order concept</span></div>
-          <div class="shot"><img src="/proiecte/starbucks/cover.jpg" alt="Starbucks concept: a 3D cup with a handwritten name next to a drink builder" loading="lazy" width="1600" height="1000"></div>
-          <div class="open">Open ↗</div>
+          <div class="shot"><img src="/proiecte/starbucks/cover.jpg" data-ta="sAlt" alt="Conceptul Starbucks: un pahar 3D cu un nume scris de mână, lângă un configurator de băuturi" loading="lazy" width="1600" height="1000"></div>
+          <div class="open" data-t="open">Deschide ↗</div>
         </a>
         <div class="meta reveal">
-          <div class="num">02 / Food &amp; drink</div>
+          <div class="num" data-t="sNum">02 / Mâncare și băuturi</div>
           <div class="logo"><img src="/proiecte/starbucks/img/starbucks-siren.svg" alt="Starbucks"></div>
-          <h3>Your name on a 3D cup</h3>
-          <p>Tap the name on the 3D cup and write your own, any length, and it is handwritten on the cup as you type. Hot drinks steam, iced ones fill with layers and ice. Below, real photos show the drinks, the bakery, and the inside of the Reserve Roasteries in Seattle, New York, Shanghai and Tokyo.</p>
-          <div class="tags"><span>Three.js</span><span>Editable 3D text</span><span>Pinned scroll gallery</span><span>Micro-interactions</span><span>Gamification</span></div>
-          <a class="link" href="/proiecte/starbucks/">View the project <span aria-hidden="true">→</span></a>
+          <h3 data-t="sH">Numele tău pe un pahar 3D</h3>
+          <p data-t="sP">Apeși pe numele de pe paharul 3D, scrii numele tău și apare scris de mână pe pahar, pe măsură ce tastezi. Băuturile calde aburesc, cele reci se umplu cu straturi și gheață. Îți compui băutura, urmărești cafeaua de la plantație până în pahar și găsești pe hartă cea mai apropiată cafenea Starbucks.</p>
+          <div class="tags" data-t="sTags"><span>Three.js</span><span>Text 3D editabil</span><span>Îți compui băutura</span><span>Hartă cu cafenele</span><span>Micro-interacțiuni</span></div>
+          <a class="link" href="/proiecte/starbucks/" data-t="view">Vezi proiectul <span aria-hidden="true">→</span></a>
         </div>
       </article>
 
-      <p class="note reveal">Both projects are unofficial concepts made for this portfolio. They are not affiliated with, sponsored or endorsed by Tesla, Inc. or Starbucks Corporation. Names and logos belong to their owners.</p>
+      <p class="note reveal" data-t="note">Ambele proiecte sunt concepte neoficiale făcute pentru acest portofoliu. Nu sunt afiliate, sponsorizate sau aprobate de Tesla, Inc. sau Starbucks Corporation. Numele și siglele aparțin proprietarilor lor.</p>
     </div>
   </section>
 
@@ -95,46 +102,46 @@
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <div class="eyebrow reveal">About me</div>
-          <h2 class="reveal">Six years of study, <em>one obsession</em>.</h2>
+          <div class="eyebrow reveal" data-t="aEye">Despre mine</div>
+          <h2 class="reveal" data-t="aH">Șase ani de studiu, <em>o singură pasiune</em>.</h2>
         </div>
       </div>
       <div class="about-grid">
-        <aside class="idcard reveal" id="idcard" aria-label="Profile">
+        <aside class="idcard reveal" id="idcard" aria-label="Profil">
           <div class="mono" aria-hidden="true">AC</div>
           <h3>Amir Charbek</h3>
-          <div class="role">Web designer &amp; front-end developer</div>
-          <dl>
-            <div><dt>Education</dt><dd>BSc Computer Science, University of Wollongong in Dubai<br>Master's degree</dd></div>
-            <div><dt>Based in</dt><dd>Bucharest, Romania · working worldwide</dd></div>
-            <div><dt>Languages</dt><dd>English, Romanian</dd></div>
-            <div><dt>Replies</dt><dd>Within one working day</dd></div>
+          <div class="role" data-t="role">Web designer și front-end developer</div>
+          <dl data-t="dl">
+            <div><dt>Studii</dt><dd>Licență în Informatică, University of Wollongong in Dubai<br>Master</dd></div>
+            <div><dt>Locație</dt><dd>București, România · lucrez cu clienți de oriunde</dd></div>
+            <div><dt>Limbi</dt><dd>Engleză, română</dd></div>
+            <div><dt>Răspund</dt><dd>În maximum o zi lucrătoare</dd></div>
           </dl>
         </aside>
         <div class="about-text">
-          <p class="reveal">I studied Computer Science for four years at the University of Wollongong in Dubai, then went on to a two-year master's. That background is why I build websites from the ground up instead of stacking templates and plugins.</p>
-          <p class="reveal">What I care about is the feeling a site leaves behind: the first impression, the small motion that makes a button satisfying, a page that opens instantly on a slow connection. I handle the whole thing, from design to code to launch.</p>
+          <p class="reveal" data-t="aP1">Am studiat Informatica patru ani la University of Wollongong in Dubai, apoi am făcut un master de doi ani. De aceea construiesc site-urile de la zero, în loc să adun șabloane și pluginuri.</p>
+          <p class="reveal" data-t="aP2">Pentru mine contează senzația pe care o lasă un site: prima impresie, mișcarea mică ce face un buton plăcut de apăsat, o pagină care se deschide imediat chiar și pe o conexiune slabă. Mă ocup de tot, de la design și cod până la lansare.</p>
 
           <div class="stats reveal">
-            <div><b data-count="6">0</b><span>years of university study</span></div>
-            <div><b data-count="100" data-suffix="%">0</b><span>hand-written code</span></div>
-            <div><b data-count="0">0</b><span>page builders or templates</span></div>
+            <div><b data-count="6">0</b><span data-t="st1">ani de studii universitare</span></div>
+            <div><b data-count="100" data-suffix="%">0</b><span data-t="st2">cod personalizat</span></div>
+            <div><b data-count="0">0</b><span data-t="st3">șabloane sau constructoare de site-uri</span></div>
           </div>
 
-          <h3 class="sub reveal">Education</h3>
+          <h3 class="sub reveal" data-t="edu">Studii</h3>
           <div class="timeline">
-            <div class="reveal"><div class="yrs">4 years</div><div><strong>Bachelor of Computer Science</strong><span>University of Wollongong in Dubai. Software engineering, algorithms, databases, networks and security.</span></div></div>
-            <div class="reveal"><div class="yrs">2 years</div><div><strong>Master's degree</strong><span>Two years of postgraduate study after the bachelor's.</span></div></div>
+            <div class="reveal" data-t="tl1"><div class="yrs">4 ani</div><div><strong>Licență în Informatică</strong><span>University of Wollongong in Dubai. Inginerie software, algoritmi, baze de date, rețele și securitate.</span></div></div>
+            <div class="reveal" data-t="tl2"><div class="yrs">2 ani</div><div><strong>Master</strong><span>Doi ani de studii postuniversitare după licență.</span></div></div>
           </div>
 
-          <h3 class="sub reveal">What I bring</h3>
+          <h3 class="sub reveal" data-t="bring">Ce aduc</h3>
           <div class="skills">
-            <div class="skill reveal"><b>Design with intent</b><span>Clean layouts, strong typography and a clear path to what matters on the page.</span></div>
-            <div class="skill reveal"><b>3D &amp; motion</b><span>Real-time 3D with Three.js, scroll-driven scenes and animation that feels natural.</span></div>
-            <div class="skill reveal"><b>Fast by default</b><span>Lean hand-written code, optimised assets and no heavy frameworks unless they earn their place.</span></div>
-            <div class="skill reveal"><b>Mobile first</b><span>Every layout is designed for the small screen first, then scaled up.</span></div>
-            <div class="skill reveal"><b>Accessible</b><span>Readable contrast, keyboard navigation and respect for reduced-motion settings.</span></div>
-            <div class="skill reveal"><b>Privacy-friendly</b><span>No unnecessary trackers or cookies. This site has none at all.</span></div>
+            <div class="skill reveal" data-t="k1"><b>Design cu intenție</b><span>Layout-uri curate, tipografie puternică și un drum clar spre ce contează pe pagină.</span></div>
+            <div class="skill reveal" data-t="k2"><b>3D și animație</b><span>3D în timp real cu Three.js, scene care se mișcă odată cu derularea și animații care par naturale.</span></div>
+            <div class="skill reveal" data-t="k3"><b>Rapid din start</b><span>Cod suplu, imagini optimizate și fără framework-uri grele, decât dacă își merită locul.</span></div>
+            <div class="skill reveal" data-t="k4"><b>Întâi pe mobil</b><span>Fiecare layout e gândit mai întâi pentru ecranul mic, apoi extins.</span></div>
+            <div class="skill reveal" data-t="k5"><b>Accesibil</b><span>Contrast bun, navigare din tastatură și respect pentru setarea de mișcare redusă.</span></div>
+            <div class="skill reveal" data-t="k6"><b>Fără urmărire</b><span>Fără trackere sau cookie-uri inutile. Site-ul acesta nu are deloc.</span></div>
           </div>
         </div>
       </div>
@@ -145,15 +152,15 @@
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <div class="eyebrow reveal" style="color:#4d6b00">Process</div>
-          <h2 class="reveal">How we'd work <em style="color:#4d6b00">together</em>.</h2>
+          <div class="eyebrow reveal" style="color:#4d6b00" data-t="pEye">Proces</div>
+          <h2 class="reveal" data-t="pH">Cum am lucra <em style="color:#4d6b00">împreună</em>.</h2>
         </div>
       </div>
       <div class="steps">
-        <div class="reveal"><div class="n">01</div><b>Talk</b><span>A short call about your goals, your audience and what you like.</span></div>
-        <div class="reveal"><div class="n">02</div><b>Design</b><span>You see the main page designed before anything gets built.</span></div>
-        <div class="reveal"><div class="n">03</div><b>Build</b><span>I code it, test it on real phones and share progress as I go.</span></div>
-        <div class="reveal"><div class="n">04</div><b>Launch</b><span>Domain, hosting and handover. The site and its content are yours.</span></div>
+        <div class="reveal" data-t="p1"><div class="n">01</div><b>Discutăm</b><span>Un apel scurt despre obiectivele tale, publicul tău și ce îți place.</span></div>
+        <div class="reveal" data-t="p2"><div class="n">02</div><b>Design</b><span>Vezi pagina principală desenată înainte să construiesc ceva.</span></div>
+        <div class="reveal" data-t="p3"><div class="n">03</div><b>Construiesc</b><span>O programez, o testez pe telefoane reale și îți arăt progresul pe parcurs.</span></div>
+        <div class="reveal" data-t="p4"><div class="n">04</div><b>Lansăm</b><span>Domeniu, găzduire și predare. Site-ul și conținutul sunt ale tale.</span></div>
       </div>
     </div>
   </section>
@@ -161,12 +168,12 @@
   <section class="contact" id="contact">
     <div class="wrap">
       <div class="eyebrow reveal">Contact</div>
-      <h2 class="reveal">Let's build <em>something</em>.</h2>
-      <p class="lead reveal">Tell me a little about your project. I reply within one working day.</p>
+      <h2 class="reveal" data-t="cH">Hai să construim <em>ceva</em>.</h2>
+      <p class="lead reveal" data-t="cLead">Spune-mi câteva lucruri despre proiectul tău. Îți răspund în maximum o zi lucrătoare.</p>
       <a class="mail reveal" href="mailto:amirutzacharbek@gmail.com">amirutzacharbek@gmail.com</a>
       <div class="cta reveal">
-        <a class="btn" href="mailto:amirutzacharbek@gmail.com?subject=New%20project">Write me an email</a>
-        <button class="btn ghost" id="copy" type="button">Copy address</button>
+        <a class="btn" id="mailBtn" href="mailto:amirutzacharbek@gmail.com?subject=Proiect%20nou" data-t="write">Scrie-mi un email</a>
+        <button class="btn ghost" id="copy" type="button" data-t="copy">Copiază adresa</button>
       </div>
     </div>
   </section>
@@ -175,14 +182,68 @@
 <footer>
   <div class="wrap">
     <span>© 2026 Amir Charbek</span>
-    <span><a href="/privacy/">Privacy</a> · No cookies, no tracking.</span>
+    <span data-t="foot"><a href="/privacy/">Confidențialitate</a> · Fără cookie-uri, fără urmărire.</span>
   </div>
 </footer>
 <div class="toast" id="toast" role="status"></div>
 
 <script>
+// English version of every text marked with data-t / data-ta (the Romanian one is in the HTML)
+const EN = {
+  title: 'Amir Charbek · Web designer &amp; front-end developer',
+  desc: "Amir Charbek designs and builds fast, interactive websites with 3D, motion and custom code. BSc Computer Science, University of Wollongong in Dubai, plus a master's degree.",
+  nWork: 'Work', nAbout: 'About', nProc: 'Process', nContact: 'Contact',
+  avail: 'Available for new projects',
+  role: 'Web designer &amp; front-end developer',
+  h1: 'Websites people <span class="nb"><em>remember</em>.</span>',
+  heroP: "I'm Amir. I design and build websites with real-time 3D, smooth motion and attention to every detail, and they still load fast on a phone.",
+  seeWork: 'See my work <span aria-hidden="true">↓</span>', touch: 'Get in touch',
+  marq: '<span>Three.js &amp; WebGL</span><span>Interaction design</span><span>Motion</span><span>Responsive layouts</span><span>Accessibility</span><span>Performance</span><span>Clean code</span>'.repeat(2),
+  wEye: 'Selected work', wH: 'Two brands, <em>reimagined</em>.',
+  wLead: 'Concept redesigns I built from scratch to show what a website can feel like. Open them and play: everything is interactive.',
+  open: 'Open ↗', view: 'View the project <span aria-hidden="true">→</span>',
+  tAlt: 'Tesla concept: a detailed 3D Tesla in a showroom',
+  tNum: '01 / Automotive', tH: 'Five 3D showrooms you scroll through',
+  tP: 'Pick a Model S, 3, X, Y or the Cybertruck and get its own page. The 3D car stands in a real place, London by day, Düsseldorf in the evening or Hamburg at night, or in a studio, and the camera circles it as you scroll. Every page has a tour of the real cabin with features you can tap, a photo gallery and a configurator for paint and lights.',
+  tTags: '<span>Three.js</span><span>5 detailed 3D models</span><span>Day, evening, night</span><span>Interior tour</span><span>Live configurator</span>',
+  sAlt: 'Starbucks concept: a 3D cup with a handwritten name next to a drink builder',
+  sNum: '02 / Food &amp; drink', sH: 'Your name on a 3D cup',
+  sP: 'Tap the name on the 3D cup and write your own, and it is handwritten on the cup as you type. Hot drinks steam, iced ones fill with layers and ice. Build your drink, follow the coffee from the farm to the cup, and find the nearest Starbucks on a map.',
+  sTags: '<span>Three.js</span><span>Editable 3D text</span><span>Drink builder</span><span>Store finder</span><span>Micro-interactions</span>',
+  note: 'Both projects are unofficial concepts made for this portfolio. They are not affiliated with, sponsored or endorsed by Tesla, Inc. or Starbucks Corporation. Names and logos belong to their owners.',
+  aEye: 'About me', aH: 'Six years of study, <em>one obsession</em>.',
+  dl: "<div><dt>Education</dt><dd>BSc Computer Science, University of Wollongong in Dubai<br>Master's degree</dd></div><div><dt>Based in</dt><dd>Bucharest, Romania · working worldwide</dd></div><div><dt>Languages</dt><dd>English, Romanian</dd></div><div><dt>Replies</dt><dd>Within one working day</dd></div>",
+  aP1: "I studied Computer Science for four years at the University of Wollongong in Dubai, then went on to a two-year master's. That background is why I build websites from the ground up instead of stacking templates and plugins.",
+  aP2: 'What I care about is the feeling a site leaves behind: the first impression, the small motion that makes a button satisfying, a page that opens instantly on a slow connection. I handle the whole thing, from design to code to launch.',
+  st1: 'years of university study', st2: 'custom code', st3: 'page builders or templates',
+  edu: 'Education',
+  tl1: '<div class="yrs">4 years</div><div><strong>Bachelor of Computer Science</strong><span>University of Wollongong in Dubai. Software engineering, algorithms, databases, networks and security.</span></div>',
+  tl2: "<div class=\"yrs\">2 years</div><div><strong>Master's degree</strong><span>Two years of postgraduate study after the bachelor's.</span></div>",
+  bring: 'What I bring',
+  k1: '<b>Design with intent</b><span>Clean layouts, strong typography and a clear path to what matters on the page.</span>',
+  k2: '<b>3D &amp; motion</b><span>Real-time 3D with Three.js, scroll-driven scenes and animation that feels natural.</span>',
+  k3: '<b>Fast by default</b><span>Lean code, optimised assets and no heavy frameworks unless they earn their place.</span>',
+  k4: '<b>Mobile first</b><span>Every layout is designed for the small screen first, then scaled up.</span>',
+  k5: '<b>Accessible</b><span>Readable contrast, keyboard navigation and respect for reduced-motion settings.</span>',
+  k6: '<b>Privacy-friendly</b><span>No unnecessary trackers or cookies. This site has none at all.</span>',
+  pEye: 'Process', pH: 'How we\'d work <em style="color:#4d6b00">together</em>.',
+  p1: '<div class="n">01</div><b>Talk</b><span>A short call about your goals, your audience and what you like.</span>',
+  p2: '<div class="n">02</div><b>Design</b><span>You see the main page designed before anything gets built.</span>',
+  p3: '<div class="n">03</div><b>Build</b><span>I code it, test it on real phones and share progress as I go.</span>',
+  p4: '<div class="n">04</div><b>Launch</b><span>Domain, hosting and handover. The site and its content are yours.</span>',
+  cH: "Let's build <em>something</em>.", cLead: 'Tell me a little about your project. I reply within one working day.',
+  write: 'Write me an email', copy: 'Copy address',
+  foot: '<a href="/privacy/">Privacy</a> · No cookies, no tracking.',
+  copied: 'Email address copied', subject: 'New%20project', idcard: 'Profile'
+};
+const RO = { title: document.title, desc: document.querySelector('meta[name=description]').content, copied: 'Adresa de email a fost copiată', subject: 'Proiect%20nou', idcard: 'Profil' };
+document.querySelectorAll('[data-t]').forEach(el => RO[el.dataset.t] = el.innerHTML);
+document.querySelectorAll('[data-ta]').forEach(el => RO[el.dataset.ta] = el.alt);
+let lang = 'ro';
+const T = k => (lang === 'en' ? EN : RO)[k];
+
 // headline: split into words that slide up one after another
-(() => {
+const splitHeadline = () => {
   const h = document.getElementById('headline'); let i = 0;
   const wrapWords = node => [...node.childNodes].forEach(n => {
     if (n.nodeType === 3) {
@@ -198,7 +259,23 @@
     } else wrapWords(n);
   });
   wrapWords(h);
-})();
+};
+
+function setLang(l, save) {
+  lang = l;
+  document.documentElement.lang = l;
+  document.querySelectorAll('[data-t]').forEach(el => { const v = T(el.dataset.t); if (v != null) el.innerHTML = v; });
+  document.querySelectorAll('[data-ta]').forEach(el => el.alt = T(el.dataset.ta));
+  document.title = new DOMParser().parseFromString(T('title'), 'text/html').body.textContent;
+  document.querySelector('meta[name=description]').content = T('desc');
+  document.getElementById('idcard').setAttribute('aria-label', T('idcard'));
+  document.getElementById('mailBtn').href = 'mailto:amirutzacharbek@gmail.com?subject=' + T('subject');
+  document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.l === l)));
+  splitHeadline();
+  if (save) { try { localStorage.setItem('lang', l); } catch {} }
+}
+document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => { if (b.dataset.l !== lang) setLang(b.dataset.l, true); }));
+if (window.__lang === 'en') setLang('en'); else splitHeadline();
 
 // header gets a background after scrolling
 const top_ = document.getElementById('top');
@@ -222,7 +299,7 @@ if (!reduce && matchMedia('(hover: hover)').matches) {
 
 // copy email
 const toast = m => { const t = document.getElementById('toast'); t.textContent = m; t.classList.add('show'); clearTimeout(t.h); t.h = setTimeout(() => t.classList.remove('show'), 2200); };
-document.getElementById('copy').addEventListener('click', async () => { try { await navigator.clipboard.writeText('amirutzacharbek@gmail.com'); toast('Email address copied'); } catch { toast('amirutzacharbek@gmail.com'); } });
+document.getElementById('copy').addEventListener('click', async () => { try { await navigator.clipboard.writeText('amirutzacharbek@gmail.com'); toast(T('copied')); } catch { toast('amirutzacharbek@gmail.com'); } });
 </script>
 
 <script type="module">

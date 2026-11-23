@@ -279,3 +279,6 @@ html.scene-city .vignette { background:
 html.scene-city .hero h1, html.scene-city .hero .sub, html.scene-city .hero-stats { text-shadow: 0 2px 18px rgba(0,0,0,.45); }
 html.scene-city .hero .sub { color: #e4e5e8; }
 html.scene-city .hero-stats span { color: #d3d5da; }
+#scene { transition: opacity .38s ease; }
+#scene.swap { opacity: 0; }
+.opts.four { grid-template-columns: repeat(4, 1fr); } .opts.four button { padding: 10px 4px; font-size: 13.5px; }

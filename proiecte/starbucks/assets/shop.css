@@ -54,6 +54,7 @@ header nav a.xmas { color: var(--red); }
 /* ---------- drink builder with the 3D cup ---------- */
 .builder { background: radial-gradient(120% 90% at 50% 40%, #e3f1ec 0%, var(--light) 55%, #bfdcd2 100%); position: relative; overflow: hidden; transition: background .8s; }
 .builder.xmas { background: radial-gradient(120% 90% at 50% 40%, #f7ebe6 0%, #ecd6cf 55%, #dcbcb2 100%); }
+.builder.xmas.green { background: radial-gradient(120% 90% at 50% 40%, #f1efe2 0%, #dfe3d2 55%, #c9d2bc 100%); }
 .builder::before { content: ""; position: absolute; inset: 0; background: url("../img/starbucks-siren.svg") no-repeat 50% 46% / min(62vh, 640px); opacity: .045; pointer-events: none; filter: grayscale(1); }
 .builder .wrap { display: grid; grid-template-columns: .95fr 1.1fr .95fr; align-items: center; min-height: calc(100svh - 105px); gap: 10px; position: relative; }
 .intro h1 { font-size: clamp(40px, 5vw, 68px); line-height: 1.02; font-weight: 600; letter-spacing: -.02em; color: var(--house); margin: 10px 0 16px; }
@@ -210,7 +211,12 @@ h2.big em { font-family: var(--serif); font-style: italic; font-weight: 500; col
 .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; position: relative; }
 .step { text-align: center; opacity: .25; transform: translateY(16px); transition: opacity .6s, transform .6s; }
 .step.on { opacity: 1; transform: none; }
-.step .ico { width: 110px; height: 110px; margin: 0 auto 18px; border-radius: 50%; background: rgba(42,74,65,.85); backdrop-filter: blur(6px); display: grid; place-items: center; border: 1px solid rgba(159,211,191,.25); }
+.step .sph { position: relative; margin: 0 0 -46px; aspect-ratio: 4 / 5; border-radius: 22px; overflow: hidden; background: #1e3932; box-shadow: 0 18px 40px rgba(0,0,0,.35); }
+.step .sph img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); transition: transform 1.4s var(--ease); }
+.step.on .sph img { transform: scale(1); }
+.step .sph::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(20,38,31,.75)); pointer-events: none; }
+.step .sph .credit { position: absolute; left: 10px; right: 10px; bottom: 52px; z-index: 1; font-size: 10px; color: rgba(255,255,255,.65); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.step .ico { position: relative; z-index: 2; width: 92px; height: 92px; margin: 0 auto 18px; border-radius: 50%; background: rgba(42,74,65,.85); backdrop-filter: blur(6px); display: grid; place-items: center; border: 1px solid rgba(159,211,191,.25); }
 .step h3 { margin: 0 0 6px; font-size: 20px; }
 .step p { margin: 0; color: #c7ddd5; font-size: 15px; }
 .journey > .credit { position: absolute; right: 24px; bottom: 16px; }
@@ -282,15 +288,27 @@ h2.big em { font-family: var(--serif); font-style: italic; font-weight: 500; col
 .tiers div.g.got { border-color: #b8913f; background: linear-gradient(135deg, #fff7e0, #f4e2b0); }
 .tiers div.got b::after { content: " ✓"; color: var(--green); }
 
-/* ---------- nearby map ---------- */
-.map { position: relative; border-radius: 22px; overflow: hidden; background: #e7ece8; height: 420px; }
-.map svg { width: 100%; height: 100%; }
-.pin2 { transform-box: fill-box; transform-origin: center; }
-.pulse { animation: pulse 2.4s ease-out infinite; transform-box: fill-box; transform-origin: center; }
-@keyframes pulse { 0% { transform: scale(.4); opacity: .7; } 100% { transform: scale(2.6); opacity: 0; } }
-.map .tip { position: absolute; background: #fff; border-radius: 12px; padding: 12px 16px; box-shadow: 0 6px 20px rgba(0,0,0,.12); font-size: 14px; pointer-events: none; opacity: 0; transform: translate(-50%, -120%) scale(.95); transition: opacity .2s, transform .2s; white-space: nowrap; }
-.map .tip.show { opacity: 1; transform: translate(-50%, -130%) scale(1); }
-.map .tip b { display: block; color: var(--house); }
+/* ---------- store finder ---------- */
+.finder { display: grid; grid-template-columns: minmax(260px, 340px) 1fr; gap: 18px; margin-top: 34px; }
+.fpanel { background: var(--house); color: #fff; border-radius: 22px; padding: 28px; display: flex; flex-direction: column; gap: 16px; }
+.fbtn { display: flex; align-items: center; justify-content: center; gap: 10px; background: var(--green); color: #fff; border: 0; border-radius: 999px; padding: 15px 20px; font: 500 16px var(--sans); cursor: pointer; transition: background .2s, transform .2s; }
+.fbtn:hover { background: #008a5c; transform: translateY(-1px); }
+.fbtn.busy svg { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.fsearch { display: flex; background: #fff; border-radius: 999px; padding: 5px; }
+.fsearch input { flex: 1; min-width: 0; border: 0; background: none; padding: 10px 14px; font: 15px var(--sans); color: var(--ink); outline: none; }
+.fsearch button { border: 0; border-radius: 999px; background: var(--house); color: #fff; padding: 10px 18px; font: 500 14px var(--sans); cursor: pointer; }
+.fnote { margin: 0; font-size: 13.5px; color: #b9d3ca; line-height: 1.5; }
+.fopen { margin-top: auto; color: #fff; font-size: 14px; text-decoration: none; border-top: 1px solid rgba(255,255,255,.15); padding-top: 14px; }
+.fopen:hover { color: var(--gold); }
+.fmap { position: relative; min-height: 440px; border-radius: 22px; overflow: hidden; background: #e7ece8 radial-gradient(circle at 50% 45%, #f4f7f5, #dfe7e2); }
+.fmap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.fph { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 6px; text-align: center; color: var(--soft); font-size: 14px; padding: 20px; }
+.fph b { color: var(--house); font-size: 18px; font-weight: 500; }
+.fph svg { animation: bob 2.4s ease-in-out infinite; }
+@keyframes bob { 50% { transform: translateY(-6px); } }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 760px) { .finder { grid-template-columns: 1fr; } .fmap { min-height: 360px; } }
 
 footer { background: var(--house); color: #b9d3ca; font-size: 13px; padding: 44px 0; }
 footer .row { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }

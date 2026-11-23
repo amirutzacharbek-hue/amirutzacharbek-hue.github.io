@@ -124,5 +124,41 @@
   "artist": "Ron Raffety",
   "license": "CC BY-SA 2.0",
   "page": "https://www.flickr.com/photos/39980790@N04/52511950305"
+ },
+ "mx-int-seats": {
+  "title": "Tesla Model X Plaid Interior 2.jpg",
+  "artist": "Mpelas199",
+  "license": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Tesla_Model_X_Plaid_Interior_2.jpg"
+ },
+ "my-int-dash": {
+  "title": "Tesla Model Y 2025 interior.jpg",
+  "artist": "Ethan Llamas",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_2025_interior.jpg"
+ },
+ "my-int-cabin": {
+  "title": "Tesla Model Y Juniper Long Range AWD White + Black 03.jpg",
+  "artist": "Ethan Llamas",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Long_Range_AWD_White_%2B_Black_03.jpg"
+ },
+ "cy-int-dash": {
+  "title": "Tesla Cybertruck - Interior - Tesla Store Athens 2024.jpg",
+  "artist": "Mpelas199",
+  "license": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Tesla_Cybertruck_-_Interior_-_Tesla_Store_Athens_2024.jpg"
+ },
+ "cy-int-console": {
+  "title": "Tesla Cybertruck - Interior 3 - Tesla Store Athens 2024.jpg",
+  "artist": "Mpelas199",
+  "license": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Tesla_Cybertruck_-_Interior_3_-_Tesla_Store_Athens_2024.jpg"
+ },
+ "mx-int-dash": {
+  "title": "Tesla Model X Plaid Interior.jpg",
+  "artist": "Mpelas199",
+  "license": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Tesla_Model_X_Plaid_Interior.jpg"
  }
 }
