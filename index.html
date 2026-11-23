@@ -1,0 +1,269 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Amir Charbek · Web designer &amp; front-end developer</title>
+<meta name="description" content="Amir Charbek designs and builds fast, interactive websites with 3D, motion and hand-written code. BSc Computer Science, University of Wollongong in Dubai, plus a master's degree.">
+<meta name="theme-color" content="#0d0e10">
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/style.css">
+<script type="importmap">{ "imports": { "three": "/lib/three.module.min.js" } }</script>
+</head>
+<body>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="brand" href="#"><i aria-hidden="true">AC</i>Amir Charbek</a>
+    <nav aria-label="Main">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="avail" href="#contact"><b aria-hidden="true"></b><span>Available for new projects</span></a>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <canvas id="bg" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="eyebrow">Web designer &amp; front-end developer</div>
+      <h1 id="headline">Websites people <span class="nb"><em>remember</em>.</span></h1>
+      <p>I'm Amir. I design and hand-code websites with real-time 3D, smooth motion and attention to every detail, and they still load fast on a phone.</p>
+      <div class="cta">
+        <a class="btn" href="#work">See my work <span aria-hidden="true">↓</span></a>
+        <a class="btn ghost" href="#contact">Get in touch</a>
+      </div>
+    </div>
+    <div class="scroll-cue" aria-hidden="true"></div>
+  </div>
+
+  <div class="marquee" aria-hidden="true"><div>
+    <span>Three.js &amp; WebGL</span><span>Interaction design</span><span>Motion</span><span>Responsive layouts</span><span>Accessibility</span><span>Performance</span><span>Clean code</span>
+    <span>Three.js &amp; WebGL</span><span>Interaction design</span><span>Motion</span><span>Responsive layouts</span><span>Accessibility</span><span>Performance</span><span>Clean code</span>
+  </div></div>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow reveal">Selected work</div>
+          <h2 class="reveal">Two brands, <em>reimagined</em>.</h2>
+        </div>
+        <p class="lead reveal">Concept redesigns I built from scratch to show what a website can feel like. Open them and play: everything is interactive.</p>
+      </div>
+
+      <article class="project">
+        <a class="frame reveal" href="/proiecte/tesla/" data-tilt>
+          <div class="bar"><i></i><i></i><i></i><span>tesla · 5-model showroom concept</span></div>
+          <div class="shot"><img src="/proiecte/tesla/cover.jpg" alt="Tesla concept: a detailed 3D Tesla in a dark showroom with a mirror floor" loading="lazy" width="1600" height="1000"></div>
+          <div class="open">Open ↗</div>
+        </a>
+        <div class="meta reveal">
+          <div class="num">01 / Automotive</div>
+          <div class="logo"><img src="/proiecte/tesla/img/tesla-wordmark-white.svg" alt="Tesla" style="height:18px"></div>
+          <h3>Five 3D showrooms you scroll through</h3>
+          <p>Pick a Model S, 3, X, Y or the Cybertruck and get its own page. Detailed real-time 3D models sit on a mirror floor, and as you scroll the camera circles the car, lights it up at night and flies inside the cabin so you can look around. Real photos fill the gallery, and at the end you change the paint and lighting live.</p>
+          <div class="tags"><span>Three.js</span><span>5 detailed 3D models</span><span>Interior view</span><span>Scroll-driven camera</span><span>Live configurator</span></div>
+          <a class="link" href="/proiecte/tesla/">View the project <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+
+      <article class="project">
+        <a class="frame reveal" href="/proiecte/starbucks/" data-tilt>
+          <div class="bar"><i></i><i></i><i></i><span>starbucks · order concept</span></div>
+          <div class="shot"><img src="/proiecte/starbucks/cover.jpg" alt="Starbucks concept: a 3D cup with a handwritten name next to a drink builder" loading="lazy" width="1600" height="1000"></div>
+          <div class="open">Open ↗</div>
+        </a>
+        <div class="meta reveal">
+          <div class="num">02 / Food &amp; drink</div>
+          <div class="logo"><img src="/proiecte/starbucks/img/starbucks-siren.svg" alt="Starbucks"></div>
+          <h3>Your name on a 3D cup</h3>
+          <p>Tap the name on the 3D cup and write your own, any length, and it is handwritten on the cup as you type. Hot drinks steam, iced ones fill with layers and ice. Below, real photos show the drinks, the bakery, and the inside of the Reserve Roasteries in Seattle, New York, Shanghai and Tokyo.</p>
+          <div class="tags"><span>Three.js</span><span>Editable 3D text</span><span>Pinned scroll gallery</span><span>Micro-interactions</span><span>Gamification</span></div>
+          <a class="link" href="/proiecte/starbucks/">View the project <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+
+      <p class="note reveal">Both projects are unofficial concepts made for this portfolio. They are not affiliated with, sponsored or endorsed by Tesla, Inc. or Starbucks Corporation. Names and logos belong to their owners.</p>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow reveal">About me</div>
+          <h2 class="reveal">Six years of study, <em>one obsession</em>.</h2>
+        </div>
+      </div>
+      <div class="about-grid">
+        <aside class="idcard reveal" id="idcard" aria-label="Profile">
+          <div class="mono" aria-hidden="true">AC</div>
+          <h3>Amir Charbek</h3>
+          <div class="role">Web designer &amp; front-end developer</div>
+          <dl>
+            <div><dt>Education</dt><dd>BSc Computer Science, University of Wollongong in Dubai<br>Master's degree</dd></div>
+            <div><dt>Based in</dt><dd>Bucharest, Romania · working worldwide</dd></div>
+            <div><dt>Languages</dt><dd>English, Romanian</dd></div>
+            <div><dt>Replies</dt><dd>Within one working day</dd></div>
+          </dl>
+        </aside>
+        <div class="about-text">
+          <p class="reveal">I studied Computer Science for four years at the University of Wollongong in Dubai, then went on to a two-year master's. That background is why I build websites from the ground up instead of stacking templates and plugins.</p>
+          <p class="reveal">What I care about is the feeling a site leaves behind: the first impression, the small motion that makes a button satisfying, a page that opens instantly on a slow connection. I handle the whole thing, from design to code to launch.</p>
+
+          <div class="stats reveal">
+            <div><b data-count="6">0</b><span>years of university study</span></div>
+            <div><b data-count="100" data-suffix="%">0</b><span>hand-written code</span></div>
+            <div><b data-count="0">0</b><span>page builders or templates</span></div>
+          </div>
+
+          <h3 class="sub reveal">Education</h3>
+          <div class="timeline">
+            <div class="reveal"><div class="yrs">4 years</div><div><strong>Bachelor of Computer Science</strong><span>University of Wollongong in Dubai. Software engineering, algorithms, databases, networks and security.</span></div></div>
+            <div class="reveal"><div class="yrs">2 years</div><div><strong>Master's degree</strong><span>Two years of postgraduate study after the bachelor's.</span></div></div>
+          </div>
+
+          <h3 class="sub reveal">What I bring</h3>
+          <div class="skills">
+            <div class="skill reveal"><b>Design with intent</b><span>Clean layouts, strong typography and a clear path to what matters on the page.</span></div>
+            <div class="skill reveal"><b>3D &amp; motion</b><span>Real-time 3D with Three.js, scroll-driven scenes and animation that feels natural.</span></div>
+            <div class="skill reveal"><b>Fast by default</b><span>Lean hand-written code, optimised assets and no heavy frameworks unless they earn their place.</span></div>
+            <div class="skill reveal"><b>Mobile first</b><span>Every layout is designed for the small screen first, then scaled up.</span></div>
+            <div class="skill reveal"><b>Accessible</b><span>Readable contrast, keyboard navigation and respect for reduced-motion settings.</span></div>
+            <div class="skill reveal"><b>Privacy-friendly</b><span>No unnecessary trackers or cookies. This site has none at all.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="process" id="process">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow reveal" style="color:#4d6b00">Process</div>
+          <h2 class="reveal">How we'd work <em style="color:#4d6b00">together</em>.</h2>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="reveal"><div class="n">01</div><b>Talk</b><span>A short call about your goals, your audience and what you like.</span></div>
+        <div class="reveal"><div class="n">02</div><b>Design</b><span>You see the main page designed before anything gets built.</span></div>
+        <div class="reveal"><div class="n">03</div><b>Build</b><span>I code it, test it on real phones and share progress as I go.</span></div>
+        <div class="reveal"><div class="n">04</div><b>Launch</b><span>Domain, hosting and handover. The site and its content are yours.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="eyebrow reveal">Contact</div>
+      <h2 class="reveal">Let's build <em>something</em>.</h2>
+      <p class="lead reveal">Tell me a little about your project. I reply within one working day.</p>
+      <a class="mail reveal" href="mailto:amirutzacharbek@gmail.com">amirutzacharbek@gmail.com</a>
+      <div class="cta reveal">
+        <a class="btn" href="mailto:amirutzacharbek@gmail.com?subject=New%20project">Write me an email</a>
+        <button class="btn ghost" id="copy" type="button">Copy address</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Amir Charbek</span>
+    <span><a href="/privacy/">Privacy</a> · No cookies, no tracking.</span>
+  </div>
+</footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+// headline: split into words that slide up one after another
+(() => {
+  const h = document.getElementById('headline'); let i = 0;
+  const wrapWords = node => [...node.childNodes].forEach(n => {
+    if (n.nodeType === 3) {
+      const frag = document.createDocumentFragment();
+      n.textContent.split(/(\s+)/).forEach(t => {
+        if (!t) return;
+        if (/^\s+$/.test(t)) { frag.append(t); return; }
+        const w = document.createElement('span'); w.className = 'w';
+        const s = document.createElement('span'); s.textContent = t; s.style.animationDelay = (.15 + i++ * .08) + 's';
+        w.append(s); frag.append(w);
+      });
+      n.replaceWith(frag);
+    } else wrapWords(n);
+  });
+  wrapWords(h);
+})();
+
+// header gets a background after scrolling
+const top_ = document.getElementById('top');
+addEventListener('scroll', () => top_.classList.toggle('solid', scrollY > 40), { passive: true });
+
+// reveal on scroll + counters
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const count = el => { const to = +el.dataset.count, suf = el.dataset.suffix || '', t0 = performance.now(); const st = t => { const k = Math.min(1, (t - t0) / 1400), e = 1 - Math.pow(1 - k, 3); el.textContent = Math.round(to * e) + suf; if (k < 1) requestAnimationFrame(st); }; reduce ? el.textContent = to + suf : requestAnimationFrame(st); };
+const io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('in'); e.target.querySelectorAll('[data-count]').forEach(count); io.unobserve(e.target); }), { threshold: .15 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// 3D tilt on project frames
+if (!reduce && matchMedia('(hover: hover)').matches) {
+  document.querySelectorAll('[data-tilt]').forEach(f => {
+    f.addEventListener('pointermove', e => { const r = f.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5; f.style.transform = `perspective(1400px) rotateY(${x * 7}deg) rotateX(${-y * 7}deg) translateY(-4px)`; });
+    f.addEventListener('pointerleave', () => f.style.transform = '');
+  });
+  const card = document.getElementById('idcard');
+  card.addEventListener('pointermove', e => { const r = card.getBoundingClientRect(); card.style.setProperty('--mx', (e.clientX - r.left) + 'px'); card.style.setProperty('--my', (e.clientY - r.top) + 'px'); });
+}
+
+// copy email
+const toast = m => { const t = document.getElementById('toast'); t.textContent = m; t.classList.add('show'); clearTimeout(t.h); t.h = setTimeout(() => t.classList.remove('show'), 2200); };
+document.getElementById('copy').addEventListener('click', async () => { try { await navigator.clipboard.writeText('amirutzacharbek@gmail.com'); toast('Email address copied'); } catch { toast('amirutzacharbek@gmail.com'); } });
+</script>
+
+<script type="module">
+// hero background: flowing noise shader that reacts to the mouse
+import * as THREE from 'three';
+const canvas = document.getElementById('bg');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let renderer;
+try { renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, powerPreference: 'low-power' }); } catch (e) { canvas.remove(); }
+if (renderer) {
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+  const scene = new THREE.Scene(), cam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  const u = { t: { value: 0 }, res: { value: new THREE.Vector2() }, m: { value: new THREE.Vector2(.7, .6) } };
+  const mat = new THREE.ShaderMaterial({ uniforms: u, vertexShader: 'varying vec2 v; void main(){ v = uv; gl_Position = vec4(position.xy, 0., 1.); }',
+    fragmentShader: `
+      precision highp float; varying vec2 v; uniform float t; uniform vec2 res, m;
+      float h(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+      float n(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.-2.*f); return mix(mix(h(i), h(i+vec2(1,0)), f.x), mix(h(i+vec2(0,1)), h(i+vec2(1,1)), f.x), f.y); }
+      float fbm(vec2 p){ float a = .5, s = 0.; for (int i = 0; i < 5; i++){ s += a*n(p); p = p*2.03 + 7.1; a *= .5; } return s; }
+      void main(){
+        vec2 p = v; p.x *= res.x/res.y; vec2 mm = m; mm.x *= res.x/res.y;
+        float d = length(p - mm);
+        vec2 q = vec2(fbm(p*1.6 + t*.05), fbm(p*1.6 - t*.04 + 3.));
+        float f = fbm(p*1.8 + q*1.9 + vec2(0., t*.03) - (p-mm)*.35*exp(-d*2.));
+        vec3 base = vec3(.051,.055,.063);
+        vec3 c = mix(base, vec3(.11,.12,.14), smoothstep(.35,.85,f));
+        c += vec3(.78,.96,.38) * pow(smoothstep(.55,.95,f), 3.) * .38;
+        c += vec3(.78,.96,.38) * .10 * exp(-d*3.2);
+        c += (h(v*res + t) - .5) * .025;
+        gl_FragColor = vec4(c, 1.);
+      }` });
+  scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), mat));
+  const size = () => { const r = canvas.getBoundingClientRect(); renderer.setSize(r.width, r.height, false); u.res.value.set(r.width, r.height); };
+  addEventListener('resize', size); size();
+  const want = new THREE.Vector2(.7, .6);
+  addEventListener('pointermove', e => { const r = canvas.getBoundingClientRect(); want.set((e.clientX - r.left) / r.width, 1 - (e.clientY - r.top) / r.height); });
+  let vis = true; new IntersectionObserver(([e]) => vis = e.isIntersecting).observe(canvas);
+  const clock = new THREE.Clock();
+  const loop = () => { requestAnimationFrame(loop); if (!vis) return; u.t.value = reduce ? 4 : clock.getElapsedTime(); u.m.value.lerp(want, .04); renderer.render(scene, cam); };
+  loop();
+}
+</script>
+</body>
+</html>

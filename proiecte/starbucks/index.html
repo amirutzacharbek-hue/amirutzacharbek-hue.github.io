@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Starbucks · 3D ordering concept (unofficial)</title>
+<meta name="description" content="Unofficial concept by Amir Charbek: a Starbucks ordering website with a 3D cup you can write your name on, the holiday menu, drinks and food you can customize, reviews, a member account with a Gold card, and the Reserve Roasteries around the world. Not affiliated with Starbucks Corporation.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="img/starbucks-siren.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="assets/shop.css">
+<script type="importmap">{ "imports": { "three": "/lib/three.module.min.js" } }</script>
+</head>
+<body>
+
+<div class="disclaimer">Unofficial concept by Amir Charbek, made for his portfolio. Not affiliated with or endorsed by Starbucks Corporation. Nothing here is a real order or a real account. <a href="/#work">Back to portfolio</a></div>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="#" aria-label="Starbucks concept, top of page"><img src="img/starbucks-siren.svg" alt="" width="46" height="46"></a>
+    <nav aria-label="Menu"><a href="#holiday" class="xmas">Holiday</a><a href="#menu">Drinks</a><a href="#bakery">Food</a><a href="#inside">Inside</a><a href="#world">Roasteries</a><a href="#rewards">Rewards</a></nav>
+    <div class="hright">
+      <button class="stars" id="starsBox" type="button" aria-label="Your stars, open your account"><b aria-hidden="true">★</b><span id="starCount">0</span><span class="lbl"> stars</span></button>
+      <button class="acctbtn" id="acctBtn" type="button"><span class="av" id="avatar" aria-hidden="true">?</span><span id="acctLbl">Sign in</span></button>
+      <button class="bagbtn" id="bagBtn" type="button" aria-label="Your bag"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 7a3 3 0 0 1 6 0" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><i id="bagCount">0</i></button>
+    </div>
+  </div>
+</header>
+
+<div class="builder" id="order">
+  <div class="wrap">
+    <div class="intro reveal">
+      <div class="kicker">Order ahead</div>
+      <h1>Your drink, <em>your name</em>, exactly how you like it.</h1>
+      <p>Pick a drink and a size, then tap the name on the cup and write your own. Any name fits.</p>
+      <a class="pill ghost" href="#holiday">See the holiday menu</a>
+    </div>
+    <div class="stage" id="stage">
+      <canvas id="cup3d" aria-label="3D cup with your name on it. Drag to rotate it, tap the name to change it."></canvas>
+      <input class="nameedit" id="cupName" maxlength="40" autocomplete="off" spellcheck="false" aria-label="Name on the cup">
+      <button class="namehint" id="nameHint" type="button"><span class="dot" aria-hidden="true"></span><span id="hintText">Tap the name on the cup to write yours</span></button>
+    </div>
+    <div class="order reveal" aria-label="Your drink">
+      <h2 id="drinkName">Caramel Macchiato</h2>
+      <div class="price">$<b id="price">5.45</b> · <span id="kcal">250</span> cal · <span class="rmini" id="bRate"></span></div>
+      <div class="field"><span>Drink</span><div class="drinks" id="drinks"></div></div>
+      <div class="field"><span>Size</span>
+        <div class="sizes" id="sizes">
+          <button data-s="tall" aria-pressed="false">Tall<small>12 fl oz</small></button>
+          <button data-s="grande" aria-pressed="true">Grande<small>16 fl oz</small></button>
+          <button data-s="venti" aria-pressed="false">Venti<small>20 fl oz</small></button>
+        </div>
+      </div>
+      <label class="field name"><span>Name on the cup</span><input id="name" maxlength="40" value="Alex" autocomplete="off" spellcheck="false"></label>
+      <div class="obtns"><button class="pill ghost" id="customBtn" type="button">Customize</button><button class="pill" id="orderBtn" type="button">Add to bag</button></div>
+    </div>
+  </div>
+</div>
+
+<section class="holiday" id="holiday">
+  <canvas class="snow" id="snow" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="head2"><div><div class="kicker">Holiday menu · <span id="countdown">Christmas is coming</span></div><h2 class="big">The red cups <em>are back</em>.</h2></div><p class="lead" style="margin:0">Peppermint, gingerbread and eggnog, only until the end of the season. Try any of them in the 3D cup at the top.</p></div>
+    <div class="hgrid">
+      <article class="hfeat" id="hfeat"></article>
+      <div class="hlist" id="hlist"></div>
+    </div>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="wrap">
+    <div class="head2"><div><div class="kicker reveal">Handcrafted drinks</div><h2 class="big reveal">Not sure what to get? <em>Ask the people.</em></h2></div><p class="lead reveal" style="margin:0">Pick a mood and we sort the menu by what other customers rated highest. Tap any drink to change the milk, add syrup or leave something out.</p></div>
+    <div class="moods" id="moods" role="group" aria-label="What are you in the mood for?">
+      <button aria-pressed="true" data-m="all">Everything</button><button aria-pressed="false" data-m="festive">Festive</button><button aria-pressed="false" data-m="sweet">Sweet</button><button aria-pressed="false" data-m="strong">Strong</button><button aria-pressed="false" data-m="cold">Cold</button><button aria-pressed="false" data-m="dairyfree">Can be dairy-free</button><button aria-pressed="false" data-m="nocoffee">No coffee</button>
+    </div>
+    <div class="pick" id="pick"></div>
+    <div class="rail" id="rail"></div>
+  </div>
+</section>
+
+<section class="bakery" id="bakery">
+  <div class="wrap">
+    <div class="head2"><div><div class="kicker reveal">Bakery</div><h2 class="big reveal">Fresh from <em>the oven</em>, every morning.</h2></div><p class="lead reveal" style="margin:0">Cakes, cake pops and pastries to go with your coffee. Nut or egg allergy? Open any item to see what is in it and leave things out.</p></div>
+    <div class="bento" id="bento"></div>
+    <div class="head2" style="margin-top:90px"><div><div class="kicker reveal">Breakfast &amp; lunch</div><h2 class="big reveal" style="font-size:clamp(32px,3.6vw,50px)">Warm, filling, <em>your way</em>.</h2></div><p class="lead reveal" style="margin:0">Take the egg out, add avocado or switch to gluten-free bread.</p></div>
+    <div class="meals" id="meals"></div>
+  </div>
+</section>
+
+<section class="journey" id="journey">
+  <div class="bg" id="jbg"></div>
+  <div class="wrap">
+    <div class="kicker" style="color:#9fd3bf">Bean to cup</div>
+    <h2 class="big">Four steps, <em>done with care</em></h2>
+    <p class="lead">Scroll to follow the coffee on its way to you.</p>
+    <div class="path-wrap" id="pathWrap">
+      <svg viewBox="0 0 1000 200" preserveAspectRatio="none" aria-hidden="true"><path id="beanPath" d="M110 60 C 250 -20, 330 140, 375 60 S 560 -20, 625 60 S 800 140, 890 60" fill="none" stroke="#cba258" stroke-width="3" stroke-dasharray="6 10" opacity=".9"/></svg>
+      <div class="steps">
+        <div class="step"><div class="ico"><svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true"><path d="M27 6c10 6 16 18 4 34-3 4-9 8-14 8 6-10 2-20-3-28 4-8 8-12 13-14z" fill="#9fd3bf"/><path d="M14 20c6 8 9 18 3 28" stroke="#1e3932" stroke-width="2.5" fill="none"/></svg></div><h3>Picked</h3><p>Coffee cherries are picked by hand, only when ripe.</p></div>
+        <div class="step"><div class="ico"><svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true"><ellipse cx="27" cy="27" rx="13" ry="18" fill="#cba258"/><path d="M27 10c-6 8 6 18 0 34" stroke="#1e3932" stroke-width="3" fill="none"/></svg></div><h3>Roasted</h3><p>Every origin gets its own roast profile.</p></div>
+        <div class="step"><div class="ico"><svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true"><path d="M12 14h30l-6 26H18z" fill="#9fd3bf"/><path d="M22 40h10v6H22z" fill="#cba258"/><path d="M27 4v6" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div><h3>Brewed</h3><p>Your barista grinds the beans right before brewing.</p></div>
+        <div class="step"><div class="ico"><svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true"><path d="M14 16h26l-3 32H17z" fill="#fff"/><rect x="12" y="11" width="30" height="6" rx="3" fill="#9fd3bf"/><circle cx="27" cy="32" r="6" fill="#00704a"/></svg></div><h3>Served</h3><p>With your name written on the cup.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="credit" id="jcredit"></div>
+</section>
+
+<section class="inside" id="inside">
+  <div class="pin">
+    <div class="head2"><div><div class="kicker" style="color:#9fd3bf">Step inside</div><h2 class="big">More than a <em>coffee shop</em>.</h2></div><div class="count"><b id="icount">01</b> / <span id="itotal">06</span></div></div>
+    <div class="itrack" id="itrack">
+      <figure class="room" data-ph="store-seattle-int" data-t="Seattle Roastery" data-s="Baristas at the main bar, Capitol Hill"></figure>
+      <figure class="room" data-ph="store-ny-int" data-t="New York Roastery" data-s="Three floors of coffee in Chelsea"></figure>
+      <figure class="room" data-ph="store-shanghai-int" data-t="Shanghai Roastery" data-s="The copper cask and the long coffee bar"></figure>
+      <figure class="room" data-ph="store-tokyo-int" data-t="Tokyo Roastery" data-s="Four floors by the Meguro River"></figure>
+      <figure class="room" data-ph="store-seattle-int2" data-t="Seattle Roastery" data-s="Tables around the roasting floor"></figure>
+      <figure class="room" data-ph="store-shanghai-roaster" data-t="The roaster" data-s="Beans are roasted where you can watch"></figure>
+    </div>
+    <div class="iprog"><i id="iprog"></i></div>
+  </div>
+</section>
+
+<section class="world" id="world">
+  <div class="wrap">
+    <div class="head2"><div><div class="kicker reveal">Around the world</div><h2 class="big reveal">Places <em>worth the trip</em>.</h2></div><p class="lead reveal" style="margin:0" id="locHint">Hover a card to look inside. Click it to see the photos full size.</p></div>
+    <div class="locs" style="margin-top:44px">
+      <button class="loc l2 reveal" data-out="store-pike-ext" data-in="store-pike-baristas" type="button"><span class="peek">Look inside</span><span class="t"><small>Seattle · since 1971</small><b>The original store</b><span>Pike Place Market, where it all began.</span></span></button>
+      <button class="loc l2 reveal" style="--d:.08s" data-out="store-seattle-ext" data-in="store-seattle-int" type="button"><span class="peek">Look inside</span><span class="t"><small>Seattle · 2014</small><b>Seattle Roastery</b><span>The first Reserve Roastery, on Capitol Hill.</span></span></button>
+      <button class="loc reveal" data-out="store-ny-ext" data-in="store-ny-int" type="button"><span class="peek">Look inside</span><span class="t"><small>New York · 2018</small><b>New York Roastery</b><span>Chelsea, by the High Line.</span></span></button>
+      <button class="loc reveal" style="--d:.08s" data-out="store-shanghai-ext" data-in="store-shanghai-int" type="button"><span class="peek">Look inside</span><span class="t"><small>Shanghai · 2017</small><b>Shanghai Roastery</b><span>One of the largest Starbucks stores in the world.</span></span></button>
+      <button class="loc reveal" style="--d:.16s" data-out="store-tokyo-ext" data-in="store-tokyo-int" type="button"><span class="peek">Look inside</span><span class="t"><small>Tokyo · 2019</small><b>Tokyo Roastery</b><span>Designed by Kengo Kuma, in Nakameguro.</span></span></button>
+    </div>
+  </div>
+</section>
+
+<section class="rewards" id="rewards">
+  <div class="wrap">
+    <div class="rtop">
+      <div class="reveal">
+        <div class="kicker">Rewards</div>
+        <h2 class="big">Collect stars. <em>Go gold.</em></h2>
+        <p class="lead">Members earn 2 stars for every $1. Your card turns gold at 200 stars, and there is a free drink waiting on your birthday.</p>
+        <div class="rbtns"><button class="pill" id="demoStars" type="button">Add 25 demo stars</button><button class="pill ghost" id="joinBtn" type="button">Join for free</button></div>
+      </div>
+      <div class="cardwrap reveal"><div class="mcard" id="mcard"></div></div>
+    </div>
+    <div class="meter reveal">
+      <div class="track"><i id="meterBar"></i><span class="mk" style="left:12.5%"></span><span class="mk" style="left:15%"></span><span class="mk" style="left:25%"></span><span class="mk gold" style="left:100%"></span></div>
+      <div class="tiers" id="tiers">
+        <div data-l="25"><b>25 ★</b><span>A free extra shot, syrup or oat milk</span></div>
+        <div data-l="30"><b>30 ★</b><span>Birthday drink unlocked: a free drink of any size on your birthday</span></div>
+        <div data-l="50"><b>50 ★</b><span>A free handcrafted drink, any size</span></div>
+        <div data-l="200" class="g"><b>200 ★ · Gold</b><span>Your card turns gold, plus a free drink as a welcome gift</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stores" style="padding-top:0">
+  <div class="wrap">
+    <div class="kicker reveal">Near you</div>
+    <h2 class="big reveal">Your nearest store, <em>a short walk</em> away</h2>
+    <p class="lead reveal">Hover or tap a pin. The locations on this map are fictional.</p>
+    <div class="map reveal" id="map">
+      <svg viewBox="0 0 1000 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="1000" height="420" fill="#e7ece8"/>
+        <path d="M-20 300 C 200 260, 300 340, 520 300 S 820 240, 1020 280" stroke="#b9d7e6" stroke-width="26" fill="none"/>
+        <g stroke="#fff" stroke-width="12" fill="none" stroke-linecap="round"><path d="M0 120 H1000"/><path d="M0 210 L1000 170"/><path d="M180 0 L240 420"/><path d="M470 0 L430 420"/><path d="M760 0 L820 420"/><path d="M0 380 L1000 360"/></g>
+        <g stroke="#fff" stroke-width="5" fill="none"><path d="M90 0 L120 420"/><path d="M330 0 L340 420"/><path d="M620 0 L600 420"/><path d="M900 0 L930 420"/><path d="M0 60 H1000"/><path d="M0 260 L1000 230"/></g>
+        <rect x="520" y="20" width="150" height="80" rx="14" fill="#cfe3c8"/>
+      </svg>
+      <div class="tip" id="tip"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="row"><span>Unofficial concept. Starbucks and the Starbucks logo are trademarks of Starbucks Corporation. Prices, calories, reward rules, reviews and map locations are illustrative; the reviews shown are samples written for this concept. Studio lighting: Poly Haven (CC0). Handwriting font: Caveat (SIL OFL).</span><span>Design and code: <a href="/" style="color:#fff">Amir Charbek</a></span></div>
+    <details><summary>Photo credits (Wikimedia Commons and Flickr, Creative Commons licences)</summary><ul id="credits"></ul></details>
+  </div>
+</footer>
+
+<!-- product: customize, allergens, reviews -->
+<div class="ov" id="pm" role="dialog" aria-modal="true" aria-labelledby="pmTitle" aria-hidden="true"><div class="pmbox" id="pmBox"></div></div>
+<!-- bag -->
+<aside class="drawer" id="bag" aria-label="Your bag" aria-hidden="true"><div class="dhead"><h2>Your bag</h2><button class="x" data-close aria-label="Close">×</button></div><div class="dbody" id="bagBody"></div><div class="dfoot" id="bagFoot"></div></aside>
+<!-- account page -->
+<div class="ov acct" id="acct" role="dialog" aria-modal="true" aria-label="Your account" aria-hidden="true"><div class="acbox" id="acBox"></div></div>
+<!-- order placed, ask for reviews -->
+<div class="ov" id="done" role="dialog" aria-modal="true" aria-label="Order placed" aria-hidden="true"><div class="donebox" id="doneBox"></div></div>
+<div class="toast" id="toast" role="status"></div>
+<div class="lb" id="lb" aria-hidden="true" role="dialog" aria-label="Photo"><button aria-label="Close">×</button><div><img alt=""><p></p></div></div>
+<div class="confetti" id="confetti" aria-hidden="true"></div>
+
+<script src="/lib/lenis.min.js"></script>
+<script type="module" src="assets/shop.js"></script>
+</body>
+</html>

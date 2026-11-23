@@ -1,0 +1,57 @@
+/* Model picker page */
+.phero { position: relative; height: 100vh; min-height: 560px; overflow: hidden; display: flex; align-items: flex-end; }
+.slides, .slide { position: absolute; inset: 0; }
+.slide { opacity: 0; transition: opacity 1.6s ease; }
+.slide.on { opacity: 1; }
+.slide img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.14); }
+.slide.on img { animation: kb 9s linear forwards; }
+@keyframes kb { from { transform: scale(1.14) translate(1.5%, 1%); } to { transform: scale(1.02) translate(0, 0); } }
+.shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,9,11,.55) 0%, rgba(8,9,11,.05) 35%, rgba(8,9,11,.35) 62%, rgba(8,9,11,.96) 100%); }
+.pcopy { position: relative; z-index: 2; padding: 0 6vw 12vh; max-width: 980px; }
+.pcopy h1 { font-size: clamp(52px, 8.6vw, 136px); line-height: .95; margin: 14px 0 18px; }
+.pcopy p { font-size: 19px; color: #d1d2d6; max-width: 520px; margin: 0 0 30px; }
+.pcopy .btn { display: inline-block; }
+.dots { position: absolute; z-index: 2; right: 6vw; bottom: 12vh; display: flex; gap: 8px; }
+.dots i { width: 28px; height: 2px; background: rgba(255,255,255,.25); position: relative; overflow: hidden; }
+.dots i.on::after { content: ""; position: absolute; inset: 0; background: #fff; transform-origin: left; animation: dot 6s linear forwards; }
+@keyframes dot { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+.plist { position: relative; padding: 14vh 6vw 10vh; }
+.rows { list-style: none; margin: 4vh 0 0; padding: 0; border-top: 1px solid var(--line); }
+.rows li { border-bottom: 1px solid var(--line); }
+.rows a { display: grid; grid-template-columns: 70px 1.3fr 1.6fr 1fr 50px; align-items: center; gap: 20px; padding: 4.2vh 0; text-decoration: none; position: relative; transition: padding .5s var(--ease), color .4s; }
+.rows a::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(255,255,255,.06), transparent); transform: scaleX(0); transform-origin: left; transition: transform .7s var(--ease); }
+.rows a:hover::before, .rows a:focus-visible::before { transform: scaleX(1); }
+.rows a:hover { padding-left: 1.6vw; }
+.rows .no { font-size: 13px; color: var(--soft); letter-spacing: .14em; }
+.rows .nm { font-size: clamp(32px, 4.4vw, 64px); font-weight: 500; line-height: 1; letter-spacing: -.02em; }
+.rows .ln2 { color: #c8c9ce; }
+.rows .st { color: var(--soft); font-size: 14px; }
+.rows .st b { color: #fff; font-weight: 400; font-size: 20px; margin-right: 4px; }
+.rows .go { width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; transition: background .3s, color .3s, transform .5s var(--ease); }
+.rows a:hover .go { background: #fff; color: #111; transform: rotate(-45deg); }
+.rows .mob { display: none; }
+.float { position: fixed; left: 0; top: 0; z-index: 5; width: 380px; aspect-ratio: 3 / 2; border-radius: 10px; overflow: hidden; pointer-events: none; opacity: 0; transform: translate(-50%, -50%) scale(.7) rotate(-4deg); transition: opacity .35s, transform .5s var(--ease); }
+.float.on { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0); }
+.float img { width: 100%; height: 100%; object-fit: cover; }
+
+.pabout { padding: 10vh 6vw 16vh; }
+.pabout h2 { max-width: 900px; }
+.pgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 6vh; }
+.pgrid div { border-top: 1px solid var(--line); padding-top: 18px; }
+.pgrid b { font-weight: 500; font-size: 19px; }
+.pgrid p { color: #b9bac0; margin: 8px 0 0; }
+
+@media (max-width: 820px) {
+  .rows a { grid-template-columns: 40px 1fr 40px; gap: 6px 12px; padding: 22px 0; }
+  .rows .ln2 { grid-column: 2 / 4; grid-row: 2; font-size: 15px; }
+  .rows .st { grid-column: 2 / 4; grid-row: 3; }
+  .rows .mob { display: block; grid-column: 1 / 4; grid-row: 4; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 10px; margin-top: 10px; }
+  .rows .go { grid-column: 3; grid-row: 1; width: 38px; height: 38px; }
+  .rows a:hover { padding-left: 0; }
+  .float { display: none; }
+  .pgrid { grid-template-columns: 1fr; }
+  .dots { left: 20px; right: auto; bottom: 5vh; }
+  .pcopy { padding: 0 20px 14vh; }
+}
+@media (prefers-reduced-motion: reduce) { .slide.on img { animation: none; transform: none; } }
