@@ -271,3 +271,11 @@ footer li { margin-bottom: 6px; break-inside: avoid; }
   #configure .opts button { padding: 8px; }
   #configure .hint { display: none; }
 }
+
+/* real-place scene: keep text readable over the photographed city */
+html.scene-city .vignette { background:
+  linear-gradient(180deg, rgba(6,7,9,.72) 0, rgba(6,7,9,.38) 16%, transparent 34%, transparent 62%, rgba(6,7,9,.5) 84%, rgba(6,7,9,.78) 100%),
+  radial-gradient(120% 90% at 50% 50%, transparent 60%, rgba(0,0,0,.4)); transition: background .6s; }
+html.scene-city .hero h1, html.scene-city .hero .sub, html.scene-city .hero-stats { text-shadow: 0 2px 18px rgba(0,0,0,.45); }
+html.scene-city .hero .sub { color: #e4e5e8; }
+html.scene-city .hero-stats span { color: #d3d5da; }
